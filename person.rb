@@ -3,12 +3,13 @@ class Person
     @id = Random.rand(1..1000)
     @name = name
     @age = age
+    @parent_permission = parent_permission
   end
 
   attr_reader :id
   attr_accessor :name, :age
 
-  def is_of_age?
+  def of_age?
     @age >= 18
   end
 
