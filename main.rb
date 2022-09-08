@@ -6,9 +6,10 @@ class Main < App
     loop do
       list
       option = gets.chomp
-      break if option == '6'
 
-      get_num option
+      break if option == '6'
+      # option.gsub(/[^0-9]/, '')
+      # get_num option
     end
     puts 'Thanks for visiting our library'
   end
