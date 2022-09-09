@@ -5,7 +5,8 @@ class Choice
   end
 
   def on_exit
-    @app.dump_all
+    puts 'Thanks for visiting our library!'
+    exit!
   end
 
   def display_list
