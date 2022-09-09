@@ -8,7 +8,7 @@ class Person < Nameable
     @name = name
     @age = age
     @parent_permission = parent_permission
-    @rental = []
+    @rentals = []
     super()
   end
 
@@ -28,5 +28,5 @@ class Person < Nameable
     Rental.new(date, self, person)
   end
 
-  private :is_of_age?
+  private :of_age?
 end

@@ -1,8 +1,8 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Project Name
+# School Library
 
-- OOP school library
+- OOP school library 
 
 ## Project Description 
 
