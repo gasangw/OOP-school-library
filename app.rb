@@ -39,7 +39,7 @@ class App
       provided_permission = gets.chomp.capitalize
       student_permission = true if provided_permission == 'Y'
       student_permission = false if provided_permission == 'N'
-      @people.push(Student.new(age, classroom, name, parent_permission: student_permission))
+      @people.push(Student.new(age, name, parent_permission: student_permission))
     when 2
       print 'Specialization: '
       specialization = gets.chomp.to_s

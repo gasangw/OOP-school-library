@@ -1,12 +1,10 @@
 class Rental
-  attr_accessor :date, :person, :book
+  attr_accessor :date, :book, :person
 
-  def initialize(person:, book:)
-    @date = DateTime.now.strftime('%Y/%m/%d %H:%m')
-
+  def initialize(date, book, person)
+    @date = date
     @book = book
     book.rentals << self
-
     @person = person
     person.rentals << self
   end
