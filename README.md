@@ -24,11 +24,17 @@
 
 ## Authors
 
-👤 **Author1**
+👤 **Gasangwa Thomas**
 
 - GitHub: [@githubhandle](https://github.com/gasangw)
 - Twitter: [@twitterhandle](https://twitter.com/ThomasGasangwa)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/gasangwa-thomas-84197222a/)
+
+👤 **AbbyNyakara**
+
+- GitHub: [@githubhandle](https://github.com/AbbyNyakara)
+- Twitter: [@twitterhandle](https://twitter.com/NyakaraAbigael)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/abigail-nyakara/)
 
 
 ## 🤝 Contributing
