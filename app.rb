@@ -7,16 +7,16 @@ require_relative 'prosessor'
 class App
   include Prosessor
   def initialize
-    @books = []
-    @people = []
+    @books = read_books_from_file
+    @people = read_people_from_file
     @rentals = []
+    # @rentals = red_rentals_from_file
   end
 
   def list_all_books
     if @books.empty?
       puts 'There is no book!'
     else
-      @books = read_books_from_file
       @books.each { |book| puts "Title: '#{book["title"]}', Author: #{book["author"]}" }
     end
   end
@@ -25,7 +25,6 @@ class App
     if @people.empty?
       puts 'there is no person'
     else
-      @people = read_people_from_file
       @people.each { |person| puts "[#{person["classname"]}] Name: #{person["name"]}, ID: #{person["id"]}, Age: #{person["age"]}" }
     end
   end
@@ -86,7 +85,7 @@ class App
     print 'ID of person: '
     person_id = gets.chomp.to_i
     (@rentals.select { |rental| rental.person.id == person_id }).each do |rental|
-      puts "Date: #{rental.date}, Book: #{rental.book.title} by #{rental.book.author}"
+      puts "Date: #{rental['date']}, Book: #{rental['book']} by #{rental['person']}"
     end
   end
 end
