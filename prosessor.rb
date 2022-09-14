@@ -56,16 +56,27 @@ module Prosessor
     end  
 
     def rentals_to_file
+
         rentals_obj = @rentals.map do |rental|
-        { date: rental.date, book: rental.book, person: rental.person }
+            { date: rental.date, 
+                book: rental.book, 
+                person: rental.person
+            }
+            end
+=begin
+        rentals_obj = @rentals.map do |rental|
+        { date: rental.date, 
+            book: {title: rental.book.title, author: rental.book.author}, 
+            person: {name: rental.person.name, id: rental.person.id}
+        }
         end
+=end
         File.write('./library/books.json', rentals_obj.to_json)
     end
-=begin
-    def red_rentals_from_file
+
+    def read_rentals_from_file
         file = File.read('./library/rentals.json')
         read_rentals = JSON.parse(file)
+        puts read_rentals
     end
-=end
-
 end

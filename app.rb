@@ -9,8 +9,8 @@ class App
   def initialize
     @books = read_books_from_file
     @people = read_people_from_file
-    @rentals = []
-    # @rentals = red_rentals_from_file
+   # @rentals = []
+    @rentals = read_rentals_from_file
   end
 
   def list_all_books
@@ -79,13 +79,14 @@ class App
     provided_date = gets.chomp
     @rentals.push(Rental.new(provided_date, @books[selected_book], @people[selected_person]))
     puts ' rental created succesfully'
+    rentals_to_file
   end
 
   def list_all_rentals_by_id
     print 'ID of person: '
     person_id = gets.chomp.to_i
     (@rentals.select { |rental| rental.person.id == person_id }).each do |rental|
-      puts "Date: #{rental['date']}, Book: #{rental['book']} by #{rental['person']}"
+      puts "Date: #{rental['date']}, Book: #{rental['book']['title']} by #{rental['book']['author']}"
     end
   end
 end
