@@ -2,8 +2,10 @@ require_relative 'book'
 require_relative 'teacher'
 require_relative 'student'
 require_relative 'rental'
+require_relative 'prosessor'
 
 class App
+  include Prosessor
   def initialize
     @books = []
     @people = []
@@ -15,6 +17,7 @@ class App
       puts 'There is no book!'
     else
       @books.each { |book| puts "Title: '#{book.title}', Author: #{book.author}" }
+      books_to_file
     end
   end
 
