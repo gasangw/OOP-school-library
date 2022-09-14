@@ -5,8 +5,7 @@ describe Book do
     @book = Book.new('title', 'author')
   end
 
-  context 'creating a book' do 
-      
+  context 'creating a book' do
     it "should create an instance of the book" do 
        expect(@book).to be_an_instance_of Book
     end
