@@ -26,7 +26,7 @@ class App
       puts 'there is no person'
     else
       @people = read_people_from_file
-      @people.each { |person| puts "[#{person["class"]}] Name: #{person["name"]}, ID: #{person["id"]}, Age: #{person["age"]}" }
+      @people.each { |person| puts "[#{person["classname"]}] Name: #{person["name"]}, ID: #{person["id"]}, Age: #{person["age"]}" }
     end
   end
 
@@ -45,7 +45,6 @@ class App
       student_permission = true if provided_permission == 'Y'
       student_permission = false if provided_permission == 'N'
       @people.push(Student.new(age, student_permission, name))
-  
 
     when 2
       print 'Specialization: '

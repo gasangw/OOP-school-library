@@ -21,18 +21,37 @@ module Prosessor
     end   
 
     def people_to_file
-        people_obj = @people.map do |person| (person.class === 'Student' ?
-            { class: person.class, name: person.name, id: person.id, age: person.age, parent_permission: person.parent_permission }
-            : { class: person.class, specialization: person.specialization, name: person.name, id: person.id, age: person.age })
+
+        students_obj = @people.filter_map do |person|
+            { classname: person.class.name,
+            name: person.name,
+            id: person.id,
+            age: person.age,
+            parent_permission: person.parent_permission
+        } if person.class.name === 'Student'
         end
+
+        teachers_obj = @people.filter_map do |person|
+            { classname: person.class.name,
+                specialization: person.specialization,
+                name: person.name,
+                id: person.id,
+                age: person.age 
+            } if person.class.name === 'Teacher'
+        end
+
+        people_obj = students_obj.concat teachers_obj
         puts people_obj
         File.write('./library/people.json', people_obj.to_json)
     end
+
+
     
     def read_people_from_file
         file = File.read('./library/people.json')
         read_people = JSON.parse(file)
     end  
+    
 end
 
 =begin
@@ -42,3 +61,29 @@ end
         end
 =end
     
+
+
+
+def people_to_file
+    students_obj = @people.filter_map do |person|
+      { 
+        classname: person.class.name,
+        name: person.name,
+        id: person.id, 
+        age: person.age,
+        parent_permission: person.parent_permission
+      } if person.class.name === 'Student'
+    end
+    teachers_obj = @people.filter_map do |person|
+      {
+        classname: person.class.name,
+        name: person.name,
+        id: person.id,
+        age: person.age,
+        specialization: person.specialization
+      } if person.class.name === 'Teacher'
+    end
+    people_obj = students_obj.concat teachers_obj
+    puts people_obj
+    File.write('./library/people.json', people_obj.to_json)
+  end
