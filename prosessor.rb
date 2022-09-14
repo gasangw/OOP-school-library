@@ -21,8 +21,9 @@ module Prosessor
     end   
 
     def people_to_file
-        people_obj = @people.map do |person| 
+        people_obj = @people.map do |person| (person.class === 'Student' ?
             { class: person.class, name: person.name, id: person.id, age: person.age, parent_permission: person.parent_permission }
+            : { class: person.class, specialization: person.specialization, name: person.name, id: person.id, age: person.age })
         end
         puts people_obj
         File.write('./library/people.json', people_obj.to_json)
