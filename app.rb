@@ -16,8 +16,8 @@ class App
     if @books.empty?
       puts 'There is no book!'
     else
-      @books.each { |book| puts "Title: '#{book.title}', Author: #{book.author}" }
-      books_to_file
+      @books = read_books_from_file
+      @books.each { |book| puts "Title: '#{book["title"]}', Author: #{book["author"]}" }
     end
   end
 
@@ -58,6 +58,7 @@ class App
     author = gets.chomp
     @books.push(Book.new(title, author))
     puts 'the book is created successfully'
+    books_to_file
   end
 
   def create_rental
