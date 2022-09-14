@@ -7,10 +7,9 @@ require_relative 'prosessor'
 class App
   include Prosessor
   def initialize
-    @books = read_books_from_file
-    @people = read_people_from_file
-   # @rentals = []
-    @rentals = read_rentals_from_file
+    @books = read_books_from_file || []
+    @people = read_people_from_file || []
+   @rentals = read_rentals_from_file || []
   end
 
   def list_all_books
@@ -66,20 +65,20 @@ class App
 
   def create_rental
     puts 'Select a book from the following list by number'
-    @books.map.with_index { |book, index| puts "#{index}) Title: '#{book.title}', Author: #{book.author}" }
+    @books.map.with_index { |book, index| puts "#{index}) Title: '#{book['title']}', Author: #{book['author']}" }
     selected_book = gets.chomp.to_i
 
     puts 'Select a person from the following list by number (Not ID): '
     @people.map.with_index do |person, index|
-      puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      puts "#{index}) [#{person['classname']}] Name: #{person['name']}, ID: #{person['id']}, Age: #{person['age']}"
     end
 
     selected_person = gets.chomp.to_i
     print 'date:'
     provided_date = gets.chomp
     @rentals.push(Rental.new(provided_date, @books[selected_book], @people[selected_person]))
-    puts ' rental created succesfully'
     rentals_to_file
+    puts ' rental created succesfully'
   end
 
   def list_all_rentals_by_id

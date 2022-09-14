@@ -7,7 +7,7 @@ module Prosessor
 
     def books_to_file
         book_obj = @books.map do |book|
-            { title: book.title, author: book.author }
+            { title: book.title, author: book.author, rentals: book.rentals }
          end
          File.write('./library/books.json', book_obj.to_json)
         end
@@ -17,6 +17,8 @@ module Prosessor
     def read_books_from_file
         file = File.read('./library/books.json')
         read_books = JSON.parse(file)
+    rescue StandardError
+        print 'no books was saved'
     end   
 
     # create two arrays for student and teacher
@@ -30,7 +32,8 @@ module Prosessor
             name: person.name,
             id: person.id,
             age: person.age,
-            parent_permission: person.parent_permission
+            parent_permission: person.parent_permission,
+            rentals: person.rentals
         } if person.class.name === 'Student'
         end
 
@@ -39,12 +42,12 @@ module Prosessor
                 specialization: person.specialization,
                 name: person.name,
                 id: person.id,
-                age: person.age 
+                age: person.age,
+                rentals: person.rentals
             } if person.class.name === 'Teacher'
         end
 
         people_obj = students_obj.concat teachers_obj
-        puts people_obj
         File.write('./library/people.json', people_obj.to_json)
     end
 
@@ -53,30 +56,27 @@ module Prosessor
     def read_people_from_file
         file = File.read('./library/people.json')
         read_people = JSON.parse(file)
+    rescue StandardError
+        print 'no people was saved'
     end  
 
     def rentals_to_file
 
-        rentals_obj = @rentals.map do |rental|
+        rentals_obj = rentals.map do |rental|
             { date: rental.date, 
                 book: rental.book, 
                 person: rental.person
             }
             end
-=begin
-        rentals_obj = @rentals.map do |rental|
-        { date: rental.date, 
-            book: {title: rental.book.title, author: rental.book.author}, 
-            person: {name: rental.person.name, id: rental.person.id}
-        }
-        end
-=end
         File.write('./library/books.json', rentals_obj.to_json)
+        puts rentals_obj
     end
 
     def read_rentals_from_file
         file = File.read('./library/rentals.json')
         read_rentals = JSON.parse(file)
         puts read_rentals
+    rescue StandardError
+        print 'no rentals was saved'
     end
 end
