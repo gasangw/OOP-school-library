@@ -1,8 +1,8 @@
-require 'spec-helper'
+require 'spec_helper'
 
 describe Classroom do
   before :each do
-    @classroom = Classroom.new("Label")
+    @classroom = Classroom.new('Label')
   end
 
   context 'when creating the classroom class' do
