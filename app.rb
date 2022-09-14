@@ -25,7 +25,8 @@ class App
     if @people.empty?
       puts 'there is no person'
     else
-      @people.each { |person| puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}" }
+      @people = read_people_from_file
+      @people.each { |person| puts "[#{person["class"]}] Name: #{person["name"]}, ID: #{person["id"]}, Age: #{person["age"]}" }
     end
   end
 
@@ -39,16 +40,20 @@ class App
     case selected_person
     when 1
       print 'Has parent permission? [Y/N]: '
+    
       provided_permission = gets.chomp.capitalize
       student_permission = true if provided_permission == 'Y'
       student_permission = false if provided_permission == 'N'
-      @people.push(Student.new(age, name, parent_permission: student_permission))
+      @people.push(Student.new(age, student_permission, name))
+  
+
     when 2
       print 'Specialization: '
       specialization = gets.chomp.to_s
-      @people.push(Teacher.new(age, name, specialization))
+      @people.push(Teacher.new(specialization, age, name))
     end
     puts 'Person created successfully.'
+    people_to_file
   end
 
   def create_book
