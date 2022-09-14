@@ -9,5 +9,10 @@ describe Classroom do
     it 'creates a classroom object' do
       expect(@classroom).to be_an_instance_of Classroom
     end
+
+    it 'adds student to classroom' do
+      @classroom.add_student('new student')
+      expect(@classroom.students).not_to be_empty
+    end
   end
 end
