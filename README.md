@@ -13,13 +13,42 @@
 # Save records of who borrowed a given book and when.
 - And all of this will be built in a beautiful and well-organized way!
 
-## Built With
+## Clone repo to run the program and decode the message!
 
-- RUBY
+## Built With
+- Ruby
+- irb
+- CMD with Ruby
 
 ## Getting Started
 
-** Install Ruby
+To get a copy of this project running on your local computer, do the followings:
+
+### Prerequisites
+- Must have a working computer
+- A Web-Browser installed (Chrome - Recommended)
+
+### Setup
+- Install a text Editor. For example [_VS_](https://visualstudio.microsoft.com/)
+- Clone this project repository on your local computer. [link](https://github.com/gasangw/OOP-school-library.git)
+- Open the project directory with _Text Editor_
+
+### Install
+
+```
+    bundler install
+```
+add on top of main.rb
+```
+    #!/usr/bin/env ruby
+```
+run
+```
+    chmod 755 main.rb
+```
+
+
+Follow all steps to install [_Ruby_](https://rubyinstaller.org/) 
 
 
 ## Authors
