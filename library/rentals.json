@@ -1,1 +1,1 @@
-[{"date":"5","book":{"title":"gthtr","author":"grtgrg","rentals":["#<Rental:0x000001f1c6314cc8>"]},"person":{"classname":"Student","name":"grfre","id":74,"age":4,"parent_permission":true,"rentals":["#<Rental:0x000001f1c6314cc8>"]}}]
+[{"date":"45","book":"#<Book:0x0000021c4af24ac8>","person":"#<Student:0x0000021c4af24758>"}]

@@ -1,136 +1,113 @@
 require 'json'
 
 module Prosessor
+  # books functuanality
 
-    # creates object in format key:value for every particular book from books array
-    # saves this data in book.json file
-
-    def books_to_file(books)
-        book_obj = @books.map do |book|
-            { title: book.title, author: book.author }
-         end
-         File.write('./library/books.json', book_obj.to_json)
-        end
-
-    # parse data from JSON file
-
-    def read_books_from_file(books)
-        file = File.read('./library/books.json')
-        read_books = JSON.parse(file)
-
-        read_books.map do |book|
-           books << Book.new(title: book.title, author: book.author)
-         end
-
-    rescue StandardError
-        print 'no books was saved'
-    end   
-
-    def save_state(books)
-        books_to_file(books)
+  def books_to_file(books)
+    book_obj = books.map do |book|
+      { title: book.title, author: book.author }
     end
-
-    # create two arrays for student and teacher
-    # conditionally map all students and teachers to separate arrays
-    # concatinate arrays and write to JSON file
-
-=begin
-    def people_to_file
-
-        students_obj = @people.filter_map do |person|
-            { classname: person.class.name,
-            name: person.name,
-            id: person.id,
-            age: person.age,
-            parent_permission: person.parent_permission,
-            rentals: person.rentals
-        } if person.class.name === 'Student'
-        end
-
-        teachers_obj = @people.filter_map do |person|
-            { classname: person.class.name,
-                specialization: person.specialization,
-                name: person.name,
-                id: person.id,
-                age: person.age,
-                rentals: person.rentals
-            } if person.class.name === 'Teacher'
-        end
-
-        people_obj = students_obj.concat teachers_obj
-        File.write('./library/people.json', people_obj.to_json)
-    end
-
-    # parse people data from JSON file
-    
-    def read_people_from_file
-        file = File.read('./library/people.json')
-        read_people = JSON.parse(file)
-    rescue StandardError
-        print 'no people was saved'
-    end  
-
-    def rentals_to_file
-
-        rentals_obj = @rentals.map do |rental|
-            { date: rental.date, 
-                book: {title: rental.book.title, author: rental.book.author}, 
-                person: {name: rental.person.name, age: rental.person.age, id: rental.person.id}
-            }
-            end
-        File.write('./library/rentals.json', rentals_obj.to_json)
-        puts rentals_obj
-    end
-
-    def read_rentals_from_file
-        file = File.read('./library/rentals.json')
-        read_rentals = JSON.parse(file)
-        puts read_rentals
-    rescue StandardError
-        print 'no rentals was saved'
-    end
-
-    # restore objects 
-
-    def restore_books(items)
-        items.each do |item|
-            book = Book.new(
-            title: book['title'],
-            author: book['author'],
-            rentals: book['rentals']
-        )
-        end
-    end
-=end
-end
-
-
-
-
-
-=begin
-
-def restore_rentals(rentals)
-    rentals.each do |rental|
-        date: rental['date'],
-
-       
-end
-
-@title = title
-@author = author
-@rentals = []
-
-def from_json_to_actual_class_objects(items)
-    items.each do |item|
-      book = Book.new(
-        id: item['id'],
-        cover_state: item['cover_state'],
-        publisher: item['publisher'],
-        archived: item['archived'],
-        publish_date: Date.parse(item['publish_date'])
-      )
-      restore_relationship(book, item)
-    end
+    File.write('./library/books.json', book_obj.to_json)
   end
-=end
+
+  # parse data from JSON file
+
+  def read_books_from_file(books)
+    file = File.read('./library/books.json')
+    read_books = JSON.parse(file)
+    puts read_books
+
+    read_books.each do |book|
+      books << Book.new(book['title'], book['author'])
+    end
+  rescue StandardError
+    print 'no books was saved'
+  end
+
+  # handle people database
+
+  def read_people_from_file(people)
+    file = File.read('./library/people.json')
+    read_people = JSON.parse(file)
+
+    read_people.each do |person, _i|
+      if person['classname'] == 'Student'
+
+        temp = Student.new(person['age'], person['parent_permission'], person['name'])
+        temp.id = person['id']
+        people << temp # rubocop:disable Style/IdenticalConditionalBranches
+
+      else
+
+        temp = Teacher.new(person['specialization'], person['age'], person['name'])
+        temp.id = person['id']
+        people << temp # rubocop:disable Style/IdenticalConditionalBranches
+
+      end
+    end
+  rescue StandardError
+    print 'no people was saved'
+  end
+
+  def people_to_file(people)
+    students_obj = people.filter_map do |person|
+      if person.instance_of?(::Student)
+        { classname: person.class.name,
+          name: person.name,
+          id: person.id,
+          age: person.age,
+          parent_permission: person.parent_permission }
+      end
+    end
+
+    teachers_obj = people.filter_map do |person|
+      if person.instance_of?(::Teacher)
+        { classname: person.class.name,
+          specialization: person.specialization,
+          name: person.name,
+          id: person.id,
+          age: person.age }
+      end
+    end
+
+    people_obj = students_obj.concat teachers_obj
+    File.write('./library/people.json', people_obj.to_json)
+  end
+
+  # handle rentals
+
+  def rentals_to_file(rentals = [])
+    rentals_obj = rentals.map do |rental|
+      { date: rental.date,
+        book: rental.book,
+        person: rental.person }
+    end
+    File.write('./library/rentals.json', rentals_obj.to_json)
+  end
+
+  def read_rentals_from_file(rentals, books, people)
+    file = File.read('./library/rentals.json')
+    read_rentals = JSON.parse(file)
+    read_rentals.each do |rental|
+      book = books.find { |b| b.title == rental['book']['title'] }
+      person = people.find { |p| p.id = rental['person']['id'] }
+      rentals << person.add_rental(rental['date'], book)
+    end
+  rescue StandardError
+    print 'no rentals was saved'
+  end
+
+  # app status methods
+
+  def save_state(app)
+    books_to_file(app.books)
+    people_to_file(app.people)
+    rentals_to_file(app.rentals)
+  end
+
+  def load_state(app)
+    read_books_from_file(app.books)
+    read_people_from_file(app.people)
+    read_rentals_from_file(app.rentals, app.books, app.people)
+  end
+end
