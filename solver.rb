@@ -1,26 +1,26 @@
 class Solver
-  def factorial(n)
+  def factorial(num)
     answer = 1
-    while n > 0 do
-      answer *= n
-      n = n-1
+    while num.positive?
+      answer *= num
+      num -= 1
     end
-    return answer
+    answer
   end
 
   def reverse(str)
     str.reverse
   end
 
-  def fizzbuzz(n)
-    if n % 15 === 0
-      return "FizzBuzz"
-    elsif n % 3 === 0
-      return "Fizz"
-    elsif n % 5 === 0
-      return "Buzz"
+  def fizzbuzz(num)
+    if (num % 15).zero?
+      'FizzBuzz'
+    elsif (num % 3).zero?
+      'Fizz'
+    elsif (num % 5).zero?
+      'Buzz'
     else
-      "#{n}"
+      num.to_s
     end
   end
 end
