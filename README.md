@@ -36,6 +36,10 @@
 - Twitter: [@twitterhandle](https://twitter.com/NyakaraAbigael)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/abigail-nyakara/)
 
+👤 **Nadya**
+
+- GitHub: [@petushka1](https://github.com/petushka1)
+- LinkedIn: [LinkedIn](http://www.linkedin.com/in/nadyalevina)
 
 ## 🤝 Contributing
 
