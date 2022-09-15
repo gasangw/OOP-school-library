@@ -9,6 +9,7 @@ def main
     when 1..6
       choice.dispatch(option)
     else
+      choice.app.save_state(@books)
       break
     end
   end

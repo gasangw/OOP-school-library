@@ -5,26 +5,36 @@ module Prosessor
     # creates object in format key:value for every particular book from books array
     # saves this data in book.json file
 
-    def books_to_file
+    def books_to_file(books)
         book_obj = @books.map do |book|
-            { title: book.title, author: book.author, rentals: book.rentals }
+            { title: book.title, author: book.author }
          end
          File.write('./library/books.json', book_obj.to_json)
         end
 
     # parse data from JSON file
 
-    def read_books_from_file
+    def read_books_from_file(books)
         file = File.read('./library/books.json')
         read_books = JSON.parse(file)
+
+        read_books.map do |book|
+           books << Book.new(title: book.title, author: book.author)
+         end
+
     rescue StandardError
         print 'no books was saved'
     end   
+
+    def save_state(books)
+        books_to_file(books)
+    end
 
     # create two arrays for student and teacher
     # conditionally map all students and teachers to separate arrays
     # concatinate arrays and write to JSON file
 
+=begin
     def people_to_file
 
         students_obj = @people.filter_map do |person|
@@ -91,6 +101,7 @@ module Prosessor
         )
         end
     end
+=end
 end
 
 

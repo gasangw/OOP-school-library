@@ -5,16 +5,17 @@ require_relative 'rental'
 require_relative 'prosessor'
 
 class App
-  include Prosessor
+  attr_accessor :books
+   include Prosessor
+
   def initialize
-    @books = restore_books(read_books_from_file) || []
-    @people = read_people_from_file || []
-    # @rentals= []
-   @rentals = read_rentals_from_file || []
+    @books = []
+    @people = []
+    @rentals= []
+  # @rentals = read_rentals_from_file || []
   end
 
   def list_all_books
-    read_books_from_file
     if @books.empty?
       puts 'There is no book!'
     else
@@ -23,7 +24,6 @@ class App
   end
 
   def list_all_people
-    read_people_from_file
     if @people.empty?
       puts 'there is no person'
     else
@@ -53,7 +53,6 @@ class App
       @people.push(Teacher.new(specialization, age, name))
     end
     puts 'Person created successfully.'
-    people_to_file
   end
 
   def create_book
@@ -63,11 +62,9 @@ class App
     author = gets.chomp
     @books.push(Book.new(title, author))
     puts 'the book is created successfully'
-    books_to_file
   end
 
   def create_rental
-    read_rentals_from_file
     puts 'Select a book from the following list by number'
     @books.map.with_index { |book, index| puts "#{index}) Title: '#{book['title']}', Author: #{book['author']}" }
     selected_book = gets.chomp.to_i
@@ -82,8 +79,6 @@ class App
     provided_date = gets.chomp
     @rentals.push(Rental.new(provided_date, @books[selected_book], @people[selected_person]))
     rentals_to_file()
-    books_to_file
-    people_to_file
     puts ' rental created succesfully'
   end
 

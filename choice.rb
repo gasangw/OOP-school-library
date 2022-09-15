@@ -1,5 +1,6 @@
 require './app'
 class Choice
+  attr_accessor :app
   def initialize
     @app = App.new
   end
