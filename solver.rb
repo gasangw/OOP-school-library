@@ -1,11 +1,10 @@
 class Solver
   def factorial(num)
-    answer = 1
-    while num.positive?
-      answer *= num
-      num -= 1
-    end
-    answer
+    raise ArgumentError if num.negative?
+    return 1 if num.zero? || num == 1
+
+    # Use recursion
+    num * factorial(num - 1)
   end
 
   def reverse(str)
