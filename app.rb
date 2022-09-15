@@ -9,10 +9,12 @@ class App
   def initialize
     @books = read_books_from_file || []
     @people = read_people_from_file || []
-   @rentals = read_rentals_from_file || []
+    @rentals= []
+   # @rentals = read_rentals_from_file || []
   end
 
   def list_all_books
+    read_books_from_file
     if @books.empty?
       puts 'There is no book!'
     else
@@ -21,6 +23,7 @@ class App
   end
 
   def list_all_people
+    read_people_from_file
     if @people.empty?
       puts 'there is no person'
     else

@@ -68,10 +68,10 @@ module Prosessor
                 person: rental.person
             }
             end
-        File.write('./library/books.json', rentals_obj.to_json)
+        File.write('./library/rentals.json', rentals_obj.to_json)
         puts rentals_obj
     end
-
+=begin
     def read_rentals_from_file
         file = File.read('./library/rentals.json')
         read_rentals = JSON.parse(file)
@@ -79,4 +79,5 @@ module Prosessor
     rescue StandardError
         print 'no rentals was saved'
     end
+=end
 end
