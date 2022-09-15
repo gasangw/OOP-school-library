@@ -62,16 +62,16 @@ module Prosessor
 
     def rentals_to_file
 
-        rentals_obj = rentals.map do |rental|
+        rentals_obj = @rentals.map do |rental|
             { date: rental.date, 
-                book: rental.book, 
-                person: rental.person
+                book: {title: rental.book.title, author: rental.book.author}, 
+                person: {name: rental.person.name, age: rental.person.age, id: rental.person.id}
             }
             end
         File.write('./library/rentals.json', rentals_obj.to_json)
         puts rentals_obj
     end
-=begin
+
     def read_rentals_from_file
         file = File.read('./library/rentals.json')
         read_rentals = JSON.parse(file)
@@ -79,5 +79,47 @@ module Prosessor
     rescue StandardError
         print 'no rentals was saved'
     end
-=end
+
+    # restore objects 
+
+    def restore_books(items)
+        items.each do |item|
+            book = Book.new(
+            title: book['title'],
+            author: book['author'],
+            rentals: book['rentals']
+        )
+        end
+    end
 end
+
+
+
+
+
+=begin
+
+def restore_rentals(rentals)
+    rentals.each do |rental|
+        date: rental['date'],
+
+       
+end
+
+@title = title
+@author = author
+@rentals = []
+
+def from_json_to_actual_class_objects(items)
+    items.each do |item|
+      book = Book.new(
+        id: item['id'],
+        cover_state: item['cover_state'],
+        publisher: item['publisher'],
+        archived: item['archived'],
+        publish_date: Date.parse(item['publish_date'])
+      )
+      restore_relationship(book, item)
+    end
+  end
+=end
