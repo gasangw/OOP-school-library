@@ -16,6 +16,9 @@ describe Solver do
 
     it 'Runs the fizzbuzz algorithm' do
       expect(@solver.fizzbuzz(15)).to eq 'FizzBuzz'
+      expect(@solver.fizzbuzz(3)).to eq 'Fizz'
+      expect(@solver.fizzbuzz(10)).to eq 'Buzz'
+      expect(@solver.fizzbuzz(7)).to eq '7'
     end
   end
 end
