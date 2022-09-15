@@ -2,12 +2,18 @@ require_relative 'book'
 require_relative 'teacher'
 require_relative 'student'
 require_relative 'rental'
+require_relative 'prosessor'
 
 class App
+  attr_accessor :books, :people, :rentals
+
+  include Prosessor
+
   def initialize
     @books = []
     @people = []
     @rentals = []
+    # @rentals = read_rentals_from_file || []
   end
 
   def list_all_books
@@ -22,7 +28,7 @@ class App
     if @people.empty?
       puts 'there is no person'
     else
-      @people.each { |person| puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}" }
+      @people.each { |person| puts "[#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}" }
     end
   end
 
@@ -36,14 +42,16 @@ class App
     case selected_person
     when 1
       print 'Has parent permission? [Y/N]: '
+
       provided_permission = gets.chomp.capitalize
       student_permission = true if provided_permission == 'Y'
       student_permission = false if provided_permission == 'N'
-      @people.push(Student.new(age, name, parent_permission: student_permission))
+      @people.push(Student.new(age, student_permission, name))
+
     when 2
       print 'Specialization: '
       specialization = gets.chomp.to_s
-      @people.push(Teacher.new(age, name, specialization))
+      @people.push(Teacher.new(specialization, age, name))
     end
     puts 'Person created successfully.'
   end
@@ -64,13 +72,14 @@ class App
 
     puts 'Select a person from the following list by number (Not ID): '
     @people.map.with_index do |person, index|
-      puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      puts "#{index}) [#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
 
     selected_person = gets.chomp.to_i
     print 'date:'
     provided_date = gets.chomp
     @rentals.push(Rental.new(provided_date, @books[selected_book], @people[selected_person]))
+    rentals_to_file
     puts ' rental created succesfully'
   end
 

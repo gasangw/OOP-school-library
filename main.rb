@@ -2,6 +2,7 @@ require './choice'
 
 def main
   choice = Choice.new
+  choice.app.load_state(choice.app)
   loop do
     choice.display_list
     option = gets.chomp.to_i
@@ -9,6 +10,7 @@ def main
     when 1..6
       choice.dispatch(option)
     else
+      choice.app.save_state(choice.app)
       break
     end
   end
